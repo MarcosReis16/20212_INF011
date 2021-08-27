@@ -9,6 +9,8 @@ import java.util.concurrent.TimeUnit;
 
 import br.ifba.inf011.solid.exception.ValidacaoException;
 import br.ifba.inf011.solid.model.Funcionario;
+import br.ifba.inf011.solid.model.FuncionarioIF;
+import br.ifba.inf011.solid.model.Reajustavel;
 
 public class Reajustador {
 	
@@ -23,7 +25,7 @@ public class Reajustador {
 		this.regras.add(regra);
 	}
 	
-	public void reajustar(Funcionario funcionario, BigDecimal indice, Date data) throws ParseException, ValidacaoException {
+	public void reajustar(Reajustavel funcionario, BigDecimal indice, Date data) throws ParseException, ValidacaoException {
 		
 		for(RegraReajuste regra : this.regras)
 			regra.validar(funcionario, indice, data);

@@ -1,24 +1,23 @@
 package br.ifba.inf011.solid.model;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.Date;
 
-import resposta.ValidacaoException;
+import br.ifba.inf011.solid.exception.ValidacaoException;
 
-public class Terceirizado{
-
-	private String nomeEmpresa;
+public class FuncionarioPJ implements Reajustavel{
+	
 	private FichaFuncional ficha;
 	
-	public Terceirizado(String nomeEmpresa, String nome, String cpf, BigDecimal salario) {
+	public FuncionarioPJ(String nome, String cpf, BigDecimal salario) {
+		super();
 		this.ficha = new FichaFuncional(nome, cpf, salario);
-		this.nomeEmpresa = nomeEmpresa;
 	}
 
-	public Terceirizado(String nomeEmpresa, String nome, String cpf, Cargo cargo, BigDecimal salario, Date dataUltReajuste, String rua,
+	public FuncionarioPJ(String nome, String cpf, Cargo cargo, BigDecimal salario, Date dataUltReajuste, String rua,
 			String numero, String cep) {
 		this.ficha = new FichaFuncional(nome, cpf, cargo, salario, dataUltReajuste, rua, numero, cep);
-		this.nomeEmpresa = nomeEmpresa;
 	}
 	
 	public String getRua() {
@@ -26,7 +25,7 @@ public class Terceirizado{
 	}
 	
 	public void setRua(String rua) {
-		this.ficha.getEndereco().setRua(rua);
+		this.ficha.setRua(rua);
 	}
 	
 	public String getNome() {
@@ -50,11 +49,15 @@ public class Terceirizado{
 	public BigDecimal getSalario() {
 		return this.ficha.getSalario();
 	}
-	
+	public void setSalario(BigDecimal salario) {
+		this.ficha.setSalario(salario);
+	}
 	public Date getDataUltReajuste() {
 		return this.ficha.getDataUltReajuste();
 	}
-
+	public void setDataUltReajuste(Date dataUltReajuste) {
+		this.ficha.setDataUltReajuste(dataUltReajuste);
+	}
 
 	@Override
 	public int hashCode() {
@@ -72,7 +75,7 @@ public class Terceirizado{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Funcionario other = (Funcionario) obj;
+		FuncionarioPJ other = (FuncionarioPJ) obj;
 		if (this.getCpf() == null) {
 			if (other.getCpf() != null)
 				return false;
@@ -83,13 +86,12 @@ public class Terceirizado{
 
 	@Override
 	public String toString() {
-		return "Terceirizado [nomeEmpresa=" + nomeEmpresa +
-				", nome=" + this.getNome() + 
+		return "FuncionarioPJ [nome=" + this.getNome() + 
 				", cpf=" + this.getCpf() + 
 				", cargo=" + this.getCargo() + 
 				", salario=" + this.getSalario() +
 				", dataUltReajuste=" + this.getDataUltReajuste() + "]";
 	}
-	
 
+	
 }

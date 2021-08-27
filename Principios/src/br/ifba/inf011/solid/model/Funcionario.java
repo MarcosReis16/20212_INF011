@@ -6,83 +6,68 @@ import java.util.Date;
 
 import br.ifba.inf011.solid.exception.ValidacaoException;
 
-public class Funcionario {
+public class Funcionario implements FuncionarioIF{
 	
-	private String nome;
-	private String cpf;
-	private Cargo cargo;
-	private BigDecimal salario;
-	private Date dataUltReajuste;
-	private Endereco endereco;
+	private FichaFuncional ficha;
 	
 	public Funcionario(String nome, String cpf, BigDecimal salario) {
 		super();
-		this.nome = nome;
-		this.cpf = cpf;
-		this.salario = salario;
-		this.cargo = Cargo.ASSISTENTE;
-		this.dataUltReajuste = new Date();
-		this.endereco = new Endereco();
+		this.ficha = new FichaFuncional(nome, cpf, salario);
 	}
 
 	public Funcionario(String nome, String cpf, Cargo cargo, BigDecimal salario, Date dataUltReajuste, String rua,
 			String numero, String cep) {
-		super();
-		this.nome = nome;
-		this.cpf = cpf;
-		this.cargo = cargo;
-		this.salario = salario;
-		this.dataUltReajuste = dataUltReajuste;
-
+		this.ficha = new FichaFuncional(nome, cpf, cargo, salario, dataUltReajuste, rua, numero, cep);
 	}
 	
 	public String getRua() {
-		return this.endereco.getRua();
+		return this.ficha.getEndereco().getRua();
 	}
 	
 	public void setRua(String rua) {
-		this.endereco.setRua(rua);
+		this.ficha.setRua(rua);
 	}
-		
 	
 	public String getNome() {
-		return nome;
+		return this.ficha.getNome();
 	}
+	
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.ficha.setNome(nome);
 	}
+	
 	public String getCpf() {
-		return cpf;
+		return this.ficha.getCpf();
 	}
 	public void setCpf(String cpf) {
-		this.cpf = cpf;
+		this.ficha.setCpf(cpf);
 	}
 	public Cargo getCargo() {
-		return cargo;
+		return this.ficha.getCargo();
 	}
 
 	public BigDecimal getSalario() {
-		return salario;
+		return this.ficha.getSalario();
 	}
 	public void setSalario(BigDecimal salario) {
-		this.salario = salario;
+		this.ficha.setSalario(salario);
 	}
 	public Date getDataUltReajuste() {
-		return dataUltReajuste;
+		return this.ficha.getDataUltReajuste();
 	}
 	public void setDataUltReajuste(Date dataUltReajuste) {
-		this.dataUltReajuste = dataUltReajuste;
+		this.ficha.setDataUltReajuste(dataUltReajuste);
 	}
 
 	public void setCargo(Cargo cargo) {
-		this.cargo = cargo;
+		this.ficha.setCargo(cargo);
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
+		result = prime * result + ((this.getCpf() == null) ? 0 : this.getCpf().hashCode());
 		return result;
 	}
 	
@@ -95,18 +80,21 @@ public class Funcionario {
 		if (getClass() != obj.getClass())
 			return false;
 		Funcionario other = (Funcionario) obj;
-		if (cpf == null) {
-			if (other.cpf != null)
+		if (this.getCpf() == null) {
+			if (other.getCpf() != null)
 				return false;
-		} else if (!cpf.equals(other.cpf))
+		} else if (!this.getCpf().equals(other.getCpf()))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Funcionario [nome=" + nome + ", cpf=" + cpf + ", cargo=" + cargo + ", salario=" + salario
-				+ ", dataUltReajuste=" + dataUltReajuste + "]";
+		return "Funcionario [nome=" + this.getNome() + 
+				", cpf=" + this.getCpf() + 
+				", cargo=" + this.getCargo() + 
+				", salario=" + this.getSalario() +
+				", dataUltReajuste=" + this.getDataUltReajuste() + "]";
 	}
 	
 }

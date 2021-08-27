@@ -10,6 +10,10 @@ import java.util.Map;
 
 import br.ifba.inf011.solid.exception.ValidacaoException;
 import br.ifba.inf011.solid.model.Funcionario;
+import br.ifba.inf011.solid.model.FuncionarioIF;
+import br.ifba.inf011.solid.model.Promovivel;
+import br.ifba.inf011.solid.model.Reajustavel;
+import br.ifba.inf011.solid.model.Terceirizado;
 import br.ifba.inf011.solid.promovedor.Promovedor;
 import br.ifba.inf011.solid.reajustador.Reajustador;
 import br.ifba.inf011.solid.reajustador.RegraPercentual;
@@ -27,26 +31,26 @@ public class App {
 		reajustador.addRegraReajuste(new RegraPercentualMinimo());
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		Date dataReajuste = format.parse(data); 
-		Funcionario funcionario = this.funcionarioDB.find(cpf);
-		reajustador.reajustar(funcionario, new BigDecimal(indice), dataReajuste);
+		Reajustavel reajustavel =   this.funcionarioDB.findReajustavel(cpf);
+		reajustador.reajustar(reajustavel, new BigDecimal(indice), dataReajuste);
 	}
 	
 	public String printRelatorio() {
 		String relatorio = "FUNCIONARIOS\n";
-		for(Funcionario f : this.funcionarioDB.findAll())
+		for(Object f : this.funcionarioDB.findAll())
 			relatorio = relatorio + f + "\n";
 		return relatorio;
 	}
 	
 	public void promover(String cpf) {
 		Promovedor promovedor = new Promovedor();
-		Funcionario funcionario = this.funcionarioDB.find(cpf);
-		promovedor.promover(funcionario);
+		Promovivel promovivel = (Funcionario) this.funcionarioDB.findPromovivel(cpf);
+		promovedor.promover(promovivel);
 	}
 	
 	public void run() throws ParseException, ValidacaoException {
 		System.out.println(this.printRelatorio());
-		this.reajustar("003", "0.04", "25/08/2022");
+		this.reajustar("003", "0.10", "25/08/2022");
 		System.out.println(this.printRelatorio());
 	}
 	
@@ -54,10 +58,15 @@ public class App {
 		System.out.println(this.printRelatorio());
 		this.promover("003");
 		System.out.println(this.printRelatorio());
+	}
+	
+	public void run3() throws ParseException, ValidacaoException {
+		System.out.println(this.printRelatorio());
+		this.reajustar("005", "0.10", "25/08/2022");
+		System.out.println(this.printRelatorio());
 	}	
 	
-	
 	public static void main(String[] args) throws ParseException, ValidacaoException {
-		(new App()).run2();
+		(new App()).run3();
 	}
 }
